@@ -41,7 +41,7 @@
         // Se presionan las dos teclas centrales de la fila superior (Índices).
         combo_vscode_format {
             timeout-ms = <50>;
-            key-positions = <5 6>; // Posiciones de T y Y en Corne (5 y 6)
+            key-positions = <0 3>; // Posiciones de ESC y E en Corne (0 y 3)
             bindings = <&kp LS(LA(F))>;
         };
     };
