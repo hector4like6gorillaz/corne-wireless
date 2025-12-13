@@ -37,11 +37,11 @@
     combos {
         compatible = "zmk,combos";
         
-        // COMBO: R + Y = Format Code (Shift + Alt + F)
-        // Útil para VS Code. Se presionan las dos teclas internas de la fila superior.
+        // COMBO: T + Y = Format Code (Shift + Alt + F)
+        // Se presionan las dos teclas centrales de la fila superior (Índices).
         combo_vscode_format {
             timeout-ms = <50>;
-            key-positions = <4 6>; // Posiciones de R y Y en Corne
+            key-positions = <5 6>; // Posiciones de T y Y en Corne (5 y 6)
             bindings = <&kp LS(LA(F))>;
         };
     };
