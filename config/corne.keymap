@@ -19,6 +19,15 @@
             bindings = <&kp LSHFT>, <&kp CAPSLOCK>;
         };
         
+        // Hold-Tap Personalizado: Mantener = Guion Bajo, Tocar = Guion Medio
+        ht_under: hold_tap_under {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&kp>, <&kp>;
+        };
+
         // Configuración de movimiento del Mouse (Aceleración)
         mmv {
             acceleration-exponent = <1>;
@@ -38,11 +47,31 @@
         compatible = "zmk,combos";
         
         // COMBO: ESC + E = Format Code (Shift + Alt + F)
-        // Se presionan las dos teclas centrales de la fila superior (Índices).
         combo_vscode_format {
             timeout-ms = <50>;
-            key-positions = <0 3>; // Posiciones de ESC y E en Corne (0 y 3)
+            key-positions = <0 3>; // Posiciones de ESC y E
             bindings = <&kp LS(LA(F))>;
+        };
+
+        // COMBO: ESC + P = Command Palette (Shift + CMD/GUI + P)
+        combo_vscode_palette {
+            timeout-ms = <50>;
+            key-positions = <0 10>; // Posiciones de ESC y P
+            bindings = <&kp LS(LG(P))>;
+        };
+
+        // COMBO: ESC + R = Screenshot Recorte (Shift + CMD/GUI + 4)
+        combo_mac_screenshot_4 {
+            timeout-ms = <50>;
+            key-positions = <0 4>; // Posiciones de ESC y R
+            bindings = <&kp LS(LG(N4))>;
+        };
+
+        // COMBO: ESC + T = Screenshot Herramienta/Video (Shift + CMD/GUI + 5)
+        combo_mac_screenshot_5 {
+            timeout-ms = <50>;
+            key-positions = <0 5>; // Posiciones de ESC y T
+            bindings = <&kp LS(LG(N5))>;
         };
     };
 
@@ -54,12 +83,12 @@
 // -----------------------------------------------------------------------------------------
 // |  ESC |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
 // | SHFT*|  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
-// | CTRL |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | SHFT |
+// | CTRL |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  | _/- | VSCD |
 //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
             bindings = <
    &kp ESC       &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
    &td_shft_caps &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LCTRL     &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
+   &kp LCTRL     &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &ht_under LS(FSLH) FSLH  &lt 7 LG(B)
                  &kp LGUI &lt 1 TAB &kp SPACE    &kp RET &lt 2 DEL &kp RALT
             >;
         };
@@ -97,15 +126,15 @@
         adjust_layer {
             display-name = "Adjust";
 // -----------------------------------------------------------------------------------------
-// | BOOT | BTCLR| BT1 | BT2 | BT3 | BT4 |   |SLEEP| NONE| NONE| NONE| NONE| NONE |
-// | NONE | NONE | NONE| NONE| NONE| NONE|   | NONE| NONE| NONE| NONE| NONE| NONE |
-// | NONE | NONE | NONE| NONE| NONE| NONE|   | NONE| NONE| NONE| NONE| NONE| NONE |
+// | BTCLR | BT1| BT2 | BT3 | BT4 | NONE |   |TG DVR| NONE| NONE| NONE| NONE| QWRT|
+// | NONE  | NONE| NONE| NONE| NONE| NONE|   | NONE| NONE| NONE| NONE| NONE| NONE |
+// | NONE  | NONE| NONE| NONE| NONE| NONE|   | NONE| NONE| NONE| NONE| NONE| NONE |
 //                     | GUI | TRNS| TRNS|   | TRNS| TRNS| TRNS|
             bindings = <
-   &bootloader &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3   &kp C_SLEEP &none &none &none &none &none
-   &none       &none      &none        &none        &none        &none          &none       &none &none &none &none &none
-   &none       &none      &none        &none        &none        &none          &none       &none &none &none &none &none
-                          &kp LGUI     &trans       &trans                      &trans      &trans &trans
+   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &none   &tog 6 &none &none &none &none &to 0
+   &none       &none      &none        &none        &none        &none          &none  &none &none &none &none &none
+   &none       &none      &none        &none        &none        &none          &none  &none &none &none &none &none
+                          &kp LGUI     &trans       &trans                      &trans &trans &trans
             >;
         };
 
@@ -138,6 +167,35 @@
                         &trans &trans &trans    &trans &trans &trans
             >;
         };
+
+        dvorak_layer {
+            display-name = "Dvorak";
+// -----------------------------------------------------------------------------------------
+// |  ESC |  '  |  ,  |  .  |  P  |  Y  |   |  F  |  G   |  C  |  R  |  L  | BSPC |
+// | SHFT*|  A  |  O  |  E  |  U  |  I  |   |  D  |  H   |  T  |  N  |  S  |  -   |
+// | CTRL |  ;  |  Q  |  J  |  K  |  X  |   |  B  |  M   |  W  |  V  |  Z  | SHFT |
+//                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
+            bindings = <
+   &kp ESC       &kp SQT  &kp COMMA &kp DOT &kp P &kp Y   &kp F &kp G  &kp C &kp R &kp L &kp BSPC
+   &td_shft_caps &kp A    &kp O     &kp E   &kp U &kp I   &kp D &kp H  &kp T &kp N &kp S &kp MINUS
+   &kp LCTRL     &kp SEMI &kp Q     &kp J   &kp K &kp X   &kp B &kp M  &kp W &kp V &kp Z &kp RSHFT
+                 &kp LGUI &lt 1 TAB &kp SPACE             &kp RET &lt 2 DEL &kp RALT
+            >;
+        };
+
+        vscode_layer {
+            display-name = "VS Code";
+// -----------------------------------------------------------------------------------------
+// |      |FOC_L| SPLIT| FOC_R|     |     |   |     | DUP_U| M_UP |     |     |      |
+// |      |PRV_T|      | NXT_T|     |     |   |CMNT | DUP_D| M_DN | SEL_M|     |      |
+// |      |     |      |      |     |     |   |     |      |      |      |     |      |
+//                    |      |     |     |   |     |      |      |
+            bindings = <
+   &trans &kp LG(N1)    &kp LG(BSLH)   &kp LG(N2)       &trans &trans   &trans     &kp LS(LA(UP))   &kp LA(UP)   &trans   &trans &trans
+   &trans &kp LG(LS(LBKT)) &trans      &kp LG(LS(RBKT)) &trans &trans   &kp LG(FSLH) &kp LS(LA(DOWN)) &kp LA(DOWN) &kp LG(D) &trans &trans
+   &trans &trans        &trans         &trans           &trans &trans   &trans     &trans           &trans       &trans   &trans &trans
+                        &trans         &trans           &trans          &trans     &trans           &trans
+            >;
+        };
     };
 };
-
