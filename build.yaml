@@ -18,9 +18,10 @@
 #     artifact-name: corne_left_with_studio
 #
 ---
+---
 include:
-  - board: nice_nano@v2
+  - board: nice_nano@2.0.0
     shield: corne_left
     #shield: settings_reset
-  - board: nice_nano@v2
+  - board: nice_nano@2.0.0
     shield: corne_right
