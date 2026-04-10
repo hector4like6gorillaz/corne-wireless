@@ -18,7 +18,7 @@
             tapping-term-ms = <200>;
             bindings = <&kp LSHFT>, <&kp CAPSLOCK>;
         };
-        
+
         // Hold-Tap Personalizado: Mantener = Guion Bajo, Tocar = Guion Medio
         ht_under: hold_tap_under {
             compatible = "zmk,behavior-hold-tap";
@@ -26,6 +26,20 @@
             flavor = "tap-preferred";
             tapping-term-ms = <200>;
             bindings = <&kp>, <&kp>;
+        };
+        
+        // Configuración de movimiento del Mouse (Aceleración) original
+        mmv {
+            acceleration-exponent = <1>;
+            time-to-max-speed-ms = <300>;
+            delay-ms = <0>;
+        };
+
+        // Configuración de Scroll original
+        msc {
+            acceleration-exponent = <0>;
+            time-to-max-speed-ms = <0>;
+            delay-ms = <0>;
         };
     };
 
@@ -35,28 +49,28 @@
         // COMBO: ESC + E = Format Code (Shift + Alt + F)
         combo_vscode_format {
             timeout-ms = <50>;
-            key-positions = <0 3>; // Posiciones de ESC y E
+            key-positions = <0 3>; 
             bindings = <&kp LS(LA(F))>;
         };
 
         // COMBO: ESC + P = Command Palette (Shift + CMD/GUI + P)
         combo_vscode_palette {
             timeout-ms = <50>;
-            key-positions = <0 10>; // Posiciones de ESC y P
+            key-positions = <0 10>; 
             bindings = <&kp LS(LG(P))>;
         };
 
         // COMBO: ESC + R = Screenshot Recorte (Shift + CMD/GUI + 4)
         combo_mac_screenshot_4 {
             timeout-ms = <50>;
-            key-positions = <0 4>; // Posiciones de ESC y R
+            key-positions = <0 4>; 
             bindings = <&kp LS(LG(N4))>;
         };
 
         // COMBO: ESC + T = Screenshot Herramienta/Video (Shift + CMD/GUI + 5)
         combo_mac_screenshot_5 {
             timeout-ms = <50>;
-            key-positions = <0 5>; // Posiciones de ESC y T
+            key-positions = <0 5>; 
             bindings = <&kp LS(LG(N5))>;
         };
     };
@@ -126,11 +140,6 @@
 
         mouse_layer {
             display-name = "Mouse";
-// -----------------------------------------------------------------------------------------
-// |      |     |     |     |     |     |   |     |     |     |     |     |      |
-// |      |     |     |     |     |     |   |     | M_UP|     |     |     |      |
-// |      |     |     |     |     |     |   |M_LFT|M_DWN|M_RGT|     |     |      |
-//                    |     |     |     |   |     |     |     |
             bindings = <
    &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
    &trans &trans &trans &trans &trans &trans    &trans &mmv MOVE_UP &trans &trans &trans &trans
@@ -141,11 +150,6 @@
 
         scroll_layer {
             display-name = "Scroll";
-// -----------------------------------------------------------------------------------------
-// |      |     |     |     |     |     |   |     |     |     |     |     |      |
-// |      |     |     |     |     |     |   |     | S_UP|     |     |     |      |
-// |      |     |     |     |     |     |   |S_LFT|S_DWN|S_RGT|     |     |      |
-//                    |     |     |     |   |     |     |     |
             bindings = <
    &trans &trans &trans &trans &trans &trans    &trans &trans        &trans &trans &trans &trans
    &trans &trans &trans &trans &trans &trans    &trans &msc SCRL_UP  &trans &trans &trans &trans
